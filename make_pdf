@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# make_pdf
+# By: Russ Spivey
+# About: Packages source files, readme, output, and git history into a single PDF file. 
+#        Useful for CSCI 344, since the instructor requires assignments to be in this format.
+
+# dependencies: 
+# - enscript
+# - git
+# - ghostscript (ps2pdf)
+# - psjoin
+
+# note: for ruby syntax highlighting, copy ruby.st to /usr/local/share/enscript/hl
+
+# require specific inputs...
+if [[ $BASH_ARGC != "2" ]]; then
+    echo "Usage: make_pdf [dir] [syntax]"
+    echo "   Where [dir] is the relative project directory"
+    echo "   and [syntax] is either 'ruby' or 'bash'."
+    echo "Note: [dir] must contain readme.txt and output.txt"
+    exit 1
+fi
+
+dir=${BASH_ARGV[1]}
+syntax=${BASH_ARGV[0]}
+
+# determine file extension from syntax
+if [[ $syntax == 'ruby' ]]; then
+    extension="rb"
+else
+    extension="sh"
+fi
+
+# get git log in reverse order with unified diffs
+git log --reverse -p -- $dir > git_changelog.txt
+
+# convert git history to .ps
+enscript git_changelog.txt --highlight=diffu --output=git_changelog.ps --color --language=PostScript
+
+# convert project files to .ps
+enscript $dir/*.$extension --color --highlight=$syntax --output=project_files.ps --language=PostScript
+
+# convert readme to .ps
+enscript $dir/readme.txt --output=readme.ps --language=PostScript
+
+# convert output to .ps
+enscript $dir/output.txt --output=output.ps --language=PostScript
+
+# concatenate ps files together
+./psjoin readme.ps project_files.ps output.ps git_changelog.ps > complete.ps
+
+# convert .ps to .pdf
+ps2pdf complete.ps $dir.pdf
+
+# delete tmp files
+rm git_changelog.txt
+rm git_changelog.ps
+rm project_files.ps
+rm readme.ps
+rm output.ps
+rm complete.ps
