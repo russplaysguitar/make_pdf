@@ -34,7 +34,7 @@ else
 fi
 
 # get git log in reverse order with unified diffs
-git log --reverse -p -- $dir > git_changelog.txt
+git log --reverse --oneline -p -- $dir > git_changelog.txt
 
 # convert git history to .ps
 enscript git_changelog.txt --highlight=diffu --output=git_changelog.ps --color --language=PostScript
