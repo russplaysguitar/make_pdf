@@ -10,6 +10,8 @@
 # - git
 # - ghostscript (ps2pdf)
 # - psjoin
+# - markdown
+# - htmldoc
 
 # note: for ruby syntax highlighting, copy ruby.st to /usr/local/share/enscript/hl
 
@@ -19,7 +21,7 @@ if [[ $BASH_ARGC != "2" ]]; then
     echo "   Where [dir] is the relative project directory"
     echo "   and [syntax] is either 'ruby' or 'bash'."
     echo "Note: Must be run from the root of the git repo in which [dir] resides"
-    echo "Note: [dir] must contain readme.txt and output.txt"
+    echo "Note: [dir] must contain readme.md and output.txt"
     exit 1
 fi
 
@@ -42,8 +44,11 @@ enscript git_changelog.txt --highlight=diffu --output=git_changelog.ps --color -
 # convert project files to .ps
 enscript $dir/*.$extension --color --highlight=$syntax --output=project_files.ps --language=PostScript
 
+# convert readme to html
+markdown $dir/readme.md > readme.html
+
 # convert readme to .ps
-enscript $dir/readme.txt --output=readme.ps --language=PostScript
+htmldoc -t ps --no-toc --no-title --no-numbered --footer ... readme.html > readme.ps
 
 # convert output to .ps
 enscript $dir/output.txt --output=output.ps --language=PostScript
@@ -61,3 +66,4 @@ rm project_files.ps
 rm readme.ps
 rm output.ps
 rm complete.ps
+rm readme.html
