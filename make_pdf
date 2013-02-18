@@ -2,18 +2,6 @@
 
 # make_pdf
 # By: Russ Spivey
-# About: Packages source files, readme, output, and git history into a single PDF file. 
-#        Useful for CSCI 344, since the instructor requires assignments to be in this format.
-
-# dependencies: 
-# - enscript
-# - git
-# - ghostscript (ps2pdf)
-# - psjoin
-# - markdown
-# - htmldoc
-
-# note: for ruby syntax highlighting, copy ruby.st to /usr/local/share/enscript/hl
 
 # require specific inputs...
 if [[ $BASH_ARGC != "2" ]]; then
