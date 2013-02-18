@@ -18,6 +18,7 @@ if [[ $BASH_ARGC != "2" ]]; then
     echo "Usage: make_pdf [dir] [syntax]"
     echo "   Where [dir] is the relative project directory"
     echo "   and [syntax] is either 'ruby' or 'bash'."
+    echo "Note: Must be run from the root of the git repo in which [dir] resides"
     echo "Note: [dir] must contain readme.txt and output.txt"
     exit 1
 fi
