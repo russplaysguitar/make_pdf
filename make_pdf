@@ -13,8 +13,8 @@ if [[ $BASH_ARGC != "2" ]]; then
     exit 1
 fi
 
-dir=${BASH_ARGV[1]}
-syntax=${BASH_ARGV[0]}
+dir=$1
+syntax=$2
 
 # determine file extension from syntax
 if [[ $syntax == 'ruby' ]]; then

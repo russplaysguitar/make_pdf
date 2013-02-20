@@ -1,7 +1,7 @@
 make_pdf
 ========
 
-Packages source files, readme, output, and git history into a single PDF file. Useful for CSCI 344, since the instructor requires assignments to be in this format. 
+Packages source files, readme, output, and git history into a single PDF file (with syntax highlighting!). Useful for CSCI 344, since the instructor requires assignments to be in this format. 
 
 Dependencies: 
 - git
@@ -12,4 +12,6 @@ Dependencies:
 - htmldoc
 - psjoin (included in repo)
 
-Note: for ruby syntax highlighting, copy ruby.st to /usr/local/share/enscript/hl
+On OSX, simply `brew install` dependencies that you don't already have.
+
+Note: for ruby syntax highlighting, copy ruby.st to ~/.enscript/
